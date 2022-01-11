@@ -5,6 +5,8 @@
 
       <SearchComponent @movieSearch="choiseMovie" />
 
+      <CardMovie v-for="(cardN, index) in movieUserList" :key="index" :userMovie="cardN" />
+
     </main>
     
   </div>
@@ -13,11 +15,13 @@
 <script>
 import axios from 'axios';
 import SearchComponent from "./components/SearchComponent.vue";
+import CardMovie from "./components/CardMovie.vue";
 
 export default {
   name: "App",
   components: {
     SearchComponent,
+    CardMovie
   },
   data: function(){
 
@@ -36,9 +40,7 @@ export default {
 
       this.movieChoiseUser = mCU;
       
-      let linkApiMovie = `https://api.themoviedb.org/3/search/tv?api_key=f80095880ece21214c44b4ace201a31c&query= + ${this.movieChoiseUser} `;
-
-      console.log(linkApiMovie);
+      let linkApiMovie = `https://api.themoviedb.org/3/search/movie?api_key=f80095880ece21214c44b4ace201a31c&query= + ${this.movieChoiseUser} `;
 
       this.movieCall(linkApiMovie);
 
