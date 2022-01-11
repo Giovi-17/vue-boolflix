@@ -1,18 +1,61 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    
+    <main>
+
+      <SearchComponent @movieSearch="choiseMovie" />
+
+    </main>
+    
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import axios from 'axios';
+import SearchComponent from "./components/SearchComponent.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    SearchComponent,
   },
+  data: function(){
+
+    return {
+
+      movieList: [],
+      movieUserList: [],
+      movieChoiseUser: "",
+
+    };
+
+  },
+  methods: {
+
+    choiseMovie: function(mCU){
+
+      this.movieChoiseUser = mCU;
+      
+      let linkApiMovie = `https://api.themoviedb.org/3/search/tv?api_key=f80095880ece21214c44b4ace201a31c&query= + ${this.movieChoiseUser} `;
+
+      console.log(linkApiMovie);
+
+      this.movieCall(linkApiMovie);
+
+    },
+
+    movieCall: function(linkApiMovie){
+
+      axios.get(linkApiMovie)
+      .then((response) => {
+
+        this.movieUserList = response.data.results;
+
+      });
+
+    }
+
+  }
 };
 </script>
 
