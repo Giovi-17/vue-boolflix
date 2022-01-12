@@ -1,7 +1,8 @@
 <template>
 
 <ul>
-
+  
+    <li class="movieImg"><img :src="imageMovie(mImg)" alt=""></li>
     <li>Titolo: {{ userMovie.title }}</li>
     <li>Titolo Originale: {{ userMovie.original_title }}</li>
     <li class="imgFlag">Lingua: <img :src="flagC(flag)" :alt="userMovie.original_language"></li>
@@ -35,6 +36,14 @@ export default {
       return flag;
 
     },
+
+    imageMovie: function(mImg){
+
+      mImg = `http://image.tmdb.org/t/p/w500${this.userMovie.poster_path}`;
+
+      return mImg;
+
+    }
 
   }
 };
