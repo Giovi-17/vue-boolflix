@@ -6,7 +6,7 @@
     <li>Titolo: {{ userShow.name }}</li>
     <li>Titolo Originale: {{ userShow.original_name }}</li>
     <li class="imgFlag">Lingua: <img :src="flagC(flag)" :alt="userShow.original_language"></li>
-    <li>Voto: {{ userShow.vote_average }}</li>
+    <li>Voto: <i v-for="( star, index ) in averageStar()" :key="index" class="fas fa-star"></i><i v-for="( starE, index ) in emptyStar()" :key="index" class="far fa-star"></i></li>
 
 </ul>
     
@@ -43,7 +43,33 @@ export default {
 
       return sImg;
 
-    }
+    },
+
+    averageStar: function(){
+
+      let star = this.userShow.vote_average;
+
+      let cStar = Math.round( star, 1 );
+
+      cStar = cStar / 2;
+
+      return cStar;
+
+    },
+
+    emptyStar: function(){
+
+      let star = this.userShow.vote_average;
+
+      let cStar = Math.round( star, 1 );
+
+      cStar = cStar / 2;
+
+      let eStar= 5 - cStar;
+
+      return eStar;
+
+    },
 
   }
 };
