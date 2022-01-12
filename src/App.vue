@@ -1,9 +1,13 @@
 <template>
   <div id="app">
-    
-    <main>
+
+    <header>
 
       <SearchComponent @movieSearch="choiseMovie" />
+
+    </header>
+    
+    <main>
 
       <CardMovie v-for="(cardN, index) in movieUserList" :key="index" :userMovie="cardN" />
 
