@@ -9,13 +9,20 @@
     
     <main>
 
-      Film:
-      <CardMovie v-for="(cardN, index) in movieUserList" :key="index" :userMovie="cardN" />
 
-      <br>
+      <span class="macro">Film:</span>
+      <div class="film">
+        
+        <CardMovie v-for="cardN in movieUserList" :key="cardN.id" :userMovie="cardN" />
+      
+      </div>
 
-      TV Show:
-      <CardShowTV v-for="cardS in showUserList" :key="cardS.id" :userShow="cardS" />
+      <span class="macro">TV Show:</span>
+      <div class="show">
+
+        <CardShowTV v-for="cardS in showUserList" :key="cardS.id" :userShow="cardS" />
+      
+      </div>
 
     </main>
     
@@ -93,12 +100,51 @@ export default {
 </script>
 
 <style lang="scss">
+
+*{
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+  header{
+
+    background-color: white;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    color: black;
+
+  }
+
+  main{
+
+    background-color: black;
+    color: white;
+    height: calc( 100vh - 40px );
+
+    .macro{
+
+      font-size: 25px;
+      font-weight: bold;
+      text-transform: uppercase;
+
+    }
+
+    .film, .show{
+
+      display: flex;
+      overflow-x: auto;
+      flex-shrink: 0;
+      height: calc( 50% - 30px );
+
+    }
+
+  }
+
 }
 </style>

@@ -1,12 +1,13 @@
 <template>
 
-<ul>
+<ul @mouseleave="showCard = true">
   
-    <li class="movieImg"><img :src="imageMovie(mImg)" alt=""></li>
-    <li>Titolo: {{ userMovie.title }}</li>
-    <li>Titolo Originale: {{ userMovie.original_title }}</li>
-    <li class="imgFlag">Lingua: <img :src="flagC(flag)" :alt="userMovie.original_language"></li>
-    <li>Voto: <i v-for="( star, index ) in averageStar()" :key="index" class="fas fa-star"></i><i v-for="( starE, index ) in emptyStar()" :key="index" class="far fa-star"></i></li>
+  <li @mouseenter="showCard = false" v-show="showCard" class="movieImg"><img :src="imageMovie(mImg)" alt=""></li>
+  <li v-show="!showCard">Titolo: {{ userMovie.title }}</li>
+  <li v-show="!showCard">Titolo Originale: {{ userMovie.original_title }}</li>
+  <li v-show="!showCard" class="imgFlag">Lingua: <img :src="flagC(flag)" :alt="userMovie.original_language"></li>
+  <li v-show="!showCard">Voto: <i v-for="( star, index ) in averageStar()" :key="index" class="fas fa-star"></i><i v-for="( starE, index ) in emptyStar()" :key="index" class="far fa-star"></i></li>
+  <li v-show="!showCard">Descrizione: {{ userMovie.overview }}</li>
 
 </ul>
     
@@ -17,6 +18,15 @@ export default {
   name: "CardMovie",
   props: {
     userMovie: Object,
+  },
+  data: function(){
+
+    return {
+
+      showCard: true
+
+    }
+
   },
   methods: {
 
@@ -79,15 +89,28 @@ export default {
 
 ul{
 
-    list-style-type: none;
-    border: 1px solid black;
-    margin: 15px;
+  list-style-type: none;
+  margin: 15px;
+  display: flex;
+  width: 343px;
+  flex-direction: column;
+  cursor: pointer;
+  overflow-y: auto;
+  flex-shrink: 0;
 
-    .imgFlag img{
+  li{
 
-      width: 20px;
+    width: 342px;
+    margin: 5px 0;
+    font-size: 20px;
 
-    }
+  }
+
+  .imgFlag img{
+
+    width: 20px;
+
+  }
 
 }
 
