@@ -13,14 +13,14 @@
       <span class="macro">Film:</span>
       <div class="film">
         
-        <CardMovie v-for="cardN in movieUserList" :key="cardN.id" :userMovie="cardN" />
+        <CardMovie v-for="cardN in movieUserList" :key="cardN.id" :details="cardN" />
       
       </div>
 
       <span class="macro">TV Show:</span>
       <div class="show">
 
-        <CardShowTV v-for="cardS in showUserList" :key="cardS.id" :userShow="cardS" />
+        <CardMovie v-for="cardS in showUserList" :key="cardS.id" :details="cardS" />
       
       </div>
 
@@ -33,15 +33,12 @@
 import axios from 'axios';
 import SearchComponent from "./components/SearchComponent.vue";
 import CardMovie from "./components/CardMovie.vue";
-import CardShowTV from "./components/CardShowTV.vue";
-
 
 export default {
   name: "App",
   components: {
     SearchComponent,
     CardMovie,
-    CardShowTV
   },
   data: function(){
 
@@ -50,7 +47,8 @@ export default {
       movieUserList: [],
       showUserList: [],
       movieChoiseUser: "",
-      showChoiseUser: "",
+      linkApi: "https://api.themoviedb.org/3/search/",
+      apiKey: "?api_key=f80095880ece21214c44b4ace201a31c&query=",
 
     };
 
@@ -61,41 +59,36 @@ export default {
 
       this.movieChoiseUser = mCU;
 
-      this.showChoiseUser = mCU;
+      let linkApiMovie = `${this.linkApi}movie${this.apiKey} + ${this.movieChoiseUser} `;
 
-      let linkApiMovie = `https://api.themoviedb.org/3/search/movie?api_key=f80095880ece21214c44b4ace201a31c&query= + ${this.movieChoiseUser} `;
+      let linkApiShow = `${this.linkApi}tv${this.apiKey} + ${this.movieChoiseUser} `;
 
-      let linkApiShow = `https://api.themoviedb.org/3/search/tv?api_key=f80095880ece21214c44b4ace201a31c&query= + ${this.movieChoiseUser} `;
+      this.movieCall(linkApiMovie, "movie");
 
-      this.movieCall(linkApiMovie);
-
-      this.showCall(linkApiShow);
+      this.movieCall(linkApiShow, "tv");
 
     },
-
-    movieCall: function(linkApiMovie){
+    movieCall: function(linkApiMovie, key){
 
       axios.get(linkApiMovie)
       .then((response) => {
 
-        this.movieUserList = response.data.results;
+        if(key === "movie"){
+
+          this.movieUserList = response.data.results;
+
+        }else{
+
+          this.showUserList = response.data.results;
+
+        }
 
       });
 
     },
 
-    showCall: function(linkApiShow){
+  },
 
-      axios.get(linkApiShow)
-      .then((response) => {
-
-        this.showUserList = response.data.results;
-
-      });
-
-    }
-
-  }
 };
 </script>
 
